@@ -1,14 +1,11 @@
-## App Template
+# JobSeek
 
-This is my personal favorite way to setup an app. The master branch here is dedicated to the core features of the template. This is designed for MVPs and other quick start applications, not necessarily the most secure or scalable.
+A simple app for streamlining the job application process.
 
-### Tech Stack
+## Problem Statement
 
-- React
-- React-Router
-- Express
-- Socket.io
-- Sqlite
-- Typeorm
-- Eslint
-- Prettier
+I don't like how much time it takes to write a resume and cover letter for a job application. Even using ChatGPT and GPT-4, the only interface is a text-box, and I have to constantly remind it my skills, experience, etc.
+
+## Solution
+
+The solution will be a simple and effective interface, where you describe the job, and you recieve a cover letter and resume, based on your skills, experience, education, etc. Later on application tracking and other things will be useful.

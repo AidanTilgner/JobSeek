@@ -1,29 +1,52 @@
 import React from "react";
+import "./Global.scss";
+import styles from "./App.module.scss";
+import { MantineProvider } from "@mantine/core";
+import { Route, Routes } from "react-router-dom";
+import Home from "./pages/Home/Home";
+import NewApplication from "./components/Forms/NewApplication";
+import Main from "./Layouts/Main";
 
 function App() {
-  const [count, setCount] = React.useState(0);
-
   return (
-    <div>
-      <p>I am a basic React app :)</p>
-      <p>
-        For more info, check out{" "}
-        <a
-          href="https://github.com/AidanTilgner/App-Template.git"
-          target="_blank"
-        >
-          this repo
-        </a>
-        .
-      </p>
-      <button
-        onClick={() => {
-          setCount(count + 1);
-        }}
-      >
-        {count > 0 ? `I have been clicked ${count} times` : "Click me!"}
-      </button>
-    </div>
+    <MantineProvider
+      withNormalizeCSS
+      theme={{
+        colorScheme: "dark",
+        headings: {
+          fontFamily: "Quicksand",
+          fontWeight: 500,
+        },
+        colors: {
+          cool_blue: [
+            "#f2f3f7",
+            "#d5d9e8",
+            "#b7c0dd",
+            "#97a7d8",
+            "#758ed9",
+            "#4e73e1",
+            "#2256f2",
+            "#2450d5",
+            "#3050d5",
+            "#3050af",
+          ],
+        },
+        primaryColor: "cool_blue",
+        fontFamily: "Inter",
+      }}
+    >
+      <div className={styles.App}>
+        <Routes>
+          <Route path="/" element={<Main />}>
+            <Route index element={<Home />} />
+            <Route path="applications">
+              <Route path="new" element={<NewApplication />} />
+            </Route>
+            <Route path="*" element={<div>404</div>} />
+          </Route>
+        </Routes>
+      </div>
+    </MantineProvider>
   );
 }
 

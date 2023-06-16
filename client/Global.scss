@@ -1,0 +1,10 @@
+html {
+  --background-color: black;
+  --text-color: white;
+  --font-family: "Inter", sans-serif;
+}
+
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+}

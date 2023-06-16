@@ -31,15 +31,20 @@ const watch = async () => {
                         const now = new Date().toLocaleTimeString();
                         console.info(`Build finished at ${now}. Watching for changes...`);
                         // make post request to /esbuild-rebuilt
+                        console.info("Sending rebuild notification...");
                         const req = http.request(
                             {
                                 host: "localhost",
-                                port: process.env.PORT,
+                                port: process.env.PORT || 3000,
                                 path: "/esbuild-rebuilt",
                                 method: "POST",
                             },
-                            () => {
-                                console.info("Sent rebuild notification...");
+                            (res) => {
+                                if (res.complete) {
+                                    console.info("Rebuild notification sent successfully.");
+                                } else {
+                                    console.error("Error sending rebuild notification:", res);
+                                }
                             }
                         );
                         req.on("error", (err) => {

@@ -4,7 +4,6 @@ import cors from "cors";
 import http from "http";
 import { Server } from "socket.io";
 import { initSocketIO } from "./utils/socket.io";
-import path from "path";
 import applicationRouter from "./routers/application";
 
 config();
@@ -38,10 +37,12 @@ app.use(applicationRouter);
 if (process.env.NODE_ENV === "development") {
   console.info("Development mode.");
   app.post("/esbuild-rebuilt", () => {
+    const now = new Date().toLocaleTimeString();
+    console.info("Sending rebuild notification to client at", now);
     connection.emit("esbuild-rebuilt");
   });
 }
 
 server.listen(PORT, () => {
-  console.log(`Server started on port ${PORT}`);
+  console.info(`Server started on port ${PORT}`);
 });
