@@ -8,7 +8,12 @@ function App() {
       <p>I am a basic React app :)</p>
       <p>
         For more info, check out{" "}
-        <a href="https://github.com/AidanTilgner/App-Template.git">this repo</a>
+        <a
+          href="https://github.com/AidanTilgner/App-Template.git"
+          target="_blank"
+        >
+          this repo
+        </a>
         .
       </p>
       <button
