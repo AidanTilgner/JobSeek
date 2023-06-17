@@ -29,17 +29,14 @@ function TextEditor({ content }: TextEditorProps) {
             height: "100%",
             width: "100%",
             boxSizing: "border-box",
+            display: "flex",
+            flexDirection: "column",
           },
           toolbar: {
-            height: "40%",
+            flexGrow: 1,
           },
           typographyStylesProvider: {
-            height: "60%",
-            width: "100%",
-          },
-          content: {
-            height: "100%",
-            width: "100%",
+            flexGrow: 3,
           },
         }}
       >

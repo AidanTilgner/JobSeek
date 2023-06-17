@@ -14,4 +14,24 @@
   box-sizing: border-box;
   padding: 18px;
   border: 1px solid var(--background-contrast);
+  line-height: 24px;
+  font-weight: 300;
+  font-family: var(--font-family-secondary);
+}
+
+@keyframes wordIn {
+  0% {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.word {
+  display: inline-block;
+  animation: wordIn 0.5s ease-in-out;
+  word-wrap: break-word;
+  margin-right: 4px;
 }
