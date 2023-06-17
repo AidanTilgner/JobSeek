@@ -6,6 +6,18 @@
   width: 100%;
 }
 
+.contentContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  height: 100%;
+  width: 100%;
+  flex-grow: 1;
+  scrollbar-color: var(--background-contrast) var(--background-alt);
+  box-sizing: border-box;
+  position: relative;
+}
+
 .content {
   flex-grow: 1;
   overflow-y: scroll;
@@ -19,19 +31,17 @@
   font-family: var(--font-family-secondary);
 }
 
-@keyframes wordIn {
-  0% {
-    opacity: 0;
-    transform: translateY(5px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.options {
+  position: absolute;
+  bottom: 14px;
+  right: 24px;
 }
-.word {
-  display: inline-block;
-  animation: wordIn 0.5s ease-in-out;
-  word-wrap: break-word;
-  margin-right: 4px;
+
+.disclaimer {
+  font-size: 14px;
+  font-weight: 300;
+  text-align: center;
+  margin-top: 24px;
+  opacity: 0.5;
+  line-height: initial;
 }

@@ -33,13 +33,7 @@ function NewApplication() {
     },
   });
 
-  /*
-
-Dear Hiring Manager, My name is Aidan and I am applying for the Software Engineer position at Google. As a web developer with experience in React, I am excited about the prospect of joining such a dynamic and innovative company. I understand that Google is a place where engineers push technology forward, develop cutting-edge platforms, and work on projects that are critical to Google’s needs. I am confident that my skills, experience, and passion for software development make me an excellent candidate for this role. As a web developer at Digital Strata, I gained valuable experience in software development and honed my skills in React. Additionally, my Web Development Diploma from BrainStation has laid the foundation for my development knowledge. I am excited about being in an environment where new technologies are constantly being explored and developed, and I am eager to contribute to the development of fluid, accessible, and secure platforms. I am impressed by Google's commitment to innovation and its ability to change how billions of users interact with information and one another. As a software engineer here, I would offer creativity, technical expertise, and an enthusiasm for taking on new challenges. I am confident that my experience in development and building accessible technologies will be a valuable asset. I appreciate your time and consideration and hope to have the opportunity to speak with you about my qualifications in more detail. Thank you for considering my application. Sincerely, Aidan Tilgner
-*/
-  const [coverLetter, setCoverLetter] = useState<string>(
-    "Dear Hiring Manager..."
-  );
+  const [coverLetter, setCoverLetter] = useState<string>("");
 
   // load resume from local storage on mount
   useEffect(() => {
@@ -169,7 +163,7 @@ Dear Hiring Manager, My name is Aidan and I am applying for the Software Enginee
           <div className={styles.output}>
             <div className={styles.coverLetter}>
               <Automatic
-                content={coverLetter || "Dear Hiring Manager..."}
+                content={coverLetter}
                 onUpdate={(content, type) => {
                   switch (type) {
                     case "append":

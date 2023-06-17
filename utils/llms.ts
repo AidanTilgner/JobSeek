@@ -11,6 +11,7 @@ const getFixBySuggestionSystemPrompt = () => {
     Your Response Should:
     - Only be the fixed copy, no extra words or meta information, just the text of the fixed copy
     - Implement the user's suggestions based on intent, not just the exact words
+    - Always return at least the original copy as a fallback if you do not understand the user's suggestions
     `;
 
   return prompt;
