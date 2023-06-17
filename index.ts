@@ -4,7 +4,8 @@ import cors from "cors";
 import http from "http";
 import { Server } from "socket.io";
 import { initSocketIO } from "./utils/socket.io";
-import applicationRouter from "./routers/application";
+import applicationRouter from "./routers/app";
+import apiRouter from "./routers/api";
 
 config();
 
@@ -16,6 +17,9 @@ const server = http.createServer(app);
 const io = new Server(server);
 
 const connection = initSocketIO(io);
+
+app.use(Express.json());
+app.use(Express.urlencoded({ extended: true }));
 
 app.use(
   cors({
@@ -33,6 +37,7 @@ app.use(
 );
 
 app.use(applicationRouter);
+app.use("/api", apiRouter);
 
 if (process.env.NODE_ENV === "development") {
   console.info("Development mode.");

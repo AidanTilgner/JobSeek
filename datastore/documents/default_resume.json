@@ -1,0 +1,42 @@
+{
+  "name": "Aidan Tilgner",
+  "email": "aidantilgner02@gmail.com",
+  "location": "Salem, Oregon, USA",
+  "phone": "5032007472",
+  "skills": [
+    {
+      "name": "React",
+      "description": "I have been using React for about 2 years now.",
+      "level": 3
+    }
+  ],
+  "experience": [
+    {
+      "title": "Web Developer",
+      "company": "Digital Strata",
+      "startDate": "2023-06-16T22:21:25.768Z",
+      "endDate": "2023-06-16T22:21:25.768Z",
+      "description": "Worked as a web developer at a software development firm."
+    }
+  ],
+  "education": [
+    {
+      "school": "BrainStation",
+      "degree": "Web Development Diploma",
+      "startDate": "2023-06-16T22:21:25.768Z",
+      "endDate": "2023-06-16T22:21:25.768Z",
+      "description": "Learned the fundamentals of web development."
+    }
+  ],
+  "projects": [
+    {
+      "name": "AIrtisan",
+      "description": "Harness the Power of ChatGPT for your Business: Hallucination-Free Conversational AI with Low Level Control.",
+      "startDate": "2023-06-16T22:21:25.768Z",
+      "endDate": "N/A",
+      "skills": ["react"],
+      "link": "www.airtisan.app",
+      "location_worked_on": "N/A"
+    }
+  ]
+}

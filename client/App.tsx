@@ -14,7 +14,7 @@ function App() {
       theme={{
         colorScheme: "dark",
         headings: {
-          fontFamily: "Quicksand",
+          fontFamily: "Inter",
           fontWeight: 500,
         },
         colors: {

@@ -1,0 +1,18 @@
+.newApplication {
+  height: 75vh;
+}
+
+.output {
+  height: 100%;
+  border: 1px solid var(--background-contrast);
+  box-sizing: border-box;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+
+  .coverLetter {
+    padding: 0;
+    flex-grow: 1;
+  }
+}
