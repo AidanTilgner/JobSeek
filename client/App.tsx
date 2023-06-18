@@ -5,6 +5,8 @@ import { MantineProvider } from "@mantine/core";
 import { Route, Routes } from "react-router-dom";
 import Home from "./pages/Home/Home";
 import NewApplication from "./components/Forms/NewApplication";
+import Signup from "./pages/Auth/Signup";
+import Login from "./pages/Auth/Login";
 import Main from "./Layouts/Main";
 
 function App() {
@@ -41,6 +43,10 @@ function App() {
             <Route index element={<Home />} />
             <Route path="applications">
               <Route path="new" element={<NewApplication />} />
+            </Route>
+            <Route path="auth">
+              <Route path="signup" element={<Signup />} />
+              <Route path="login" element={<Login />} />
             </Route>
             <Route path="*" element={<div>404</div>} />
           </Route>

@@ -6,10 +6,13 @@ import { Server } from "socket.io";
 import { initSocketIO } from "./utils/socket.io";
 import applicationRouter from "./routers/app";
 import apiRouter from "./routers/api";
+import { initializeDatabase } from "./database";
 
 config();
 
 const PORT = process.env.PORT || 3000;
+
+initializeDatabase();
 
 const app = Express();
 
@@ -36,8 +39,8 @@ app.use(
   }
 );
 
-app.use(applicationRouter);
 app.use("/api", apiRouter);
+app.use(applicationRouter);
 
 if (process.env.NODE_ENV === "development") {
   console.info("Development mode.");

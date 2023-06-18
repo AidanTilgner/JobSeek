@@ -3,9 +3,11 @@ import styles from "./Navbar.module.scss";
 import { Title, Burger, Button } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { Link } from "react-router-dom";
+import { useUser } from "../../context/User";
 
 function Navbar() {
   const [opened, { toggle }] = useDisclosure(false);
+  const { user } = useUser();
 
   return (
     <div className={styles.navbar}>
@@ -21,22 +23,52 @@ function Navbar() {
           <li onClick={toggle} className={styles.mobileItem}>
             <Link to="/">Home</Link>
           </li>
-          <li onClick={toggle} className={styles.mobileItem}>
-            <Link to="/applications/new">
-              <Button variant="outline">Apply</Button>
-            </Link>
-          </li>
+          {!user && (
+            <li onClick={toggle} className={styles.mobileItem}>
+              <Link to="/auth/signup">
+                <Button variant="outline">Sign Up</Button>
+              </Link>
+            </li>
+          )}
+          {!user && (
+            <li onClick={toggle} className={styles.mobileItem}>
+              <Link to="/auth/login">
+                <Button variant="filled">Login</Button>
+              </Link>
+            </li>
+          )}
+          {user && (
+            <li onClick={toggle} className={styles.mobileItem}>
+              <Link to="/applications/new">
+                <Button variant="outline">Apply</Button>
+              </Link>
+            </li>
+          )}
         </ul>
       )}
       <ul className={styles.desktopItems}>
         <li className={styles.desktopItem}>
           <Link to="/">Home</Link>
         </li>
-        <li className={styles.desktopItem}>
-          <Link to="/applications/new">
-            <Button variant="outline">Apply</Button>
+        {!user && (
+          <Link to="/auth/signup">
+            <Button variant="outline">Sign Up</Button>
           </Link>
-        </li>
+        )}
+        {!user && (
+          <li className={styles.desktopItem}>
+            <Link to="/auth/login">
+              <Button variant="filled">Login</Button>
+            </Link>
+          </li>
+        )}
+        {user && (
+          <li className={styles.desktopItem}>
+            <Link to="/applications/new">
+              <Button variant="outline">Apply</Button>
+            </Link>
+          </li>
+        )}
       </ul>
     </div>
   );

@@ -4,6 +4,7 @@
   gap: 24px;
   height: 100%;
   width: 100%;
+  position: relative;
 }
 
 .contentContainer {
@@ -44,4 +45,11 @@
   margin-top: 24px;
   opacity: 0.5;
   line-height: initial;
+}
+
+.controls {
+  position: absolute;
+  bottom: 24px;
+  left: 24px;
+  right: 24px;
 }

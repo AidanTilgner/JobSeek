@@ -39,7 +39,7 @@ function NewApplication() {
   useEffect(() => {
     const resume = localStorage.getItem("resume");
     if (resume) {
-      const parsedResume = JSON.parse(JSON.parse(resume)) as Resume;
+      const parsedResume = JSON.parse(resume) as Resume;
       form.setValues((prev) => {
         return {
           ...prev,

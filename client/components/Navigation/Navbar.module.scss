@@ -55,6 +55,7 @@
   right: 0;
   backdrop-filter: blur(5px) brightness(0.5);
   animation: fadeIn 0.5s ease-in-out;
+  z-index: 100;
 
   @media screen and (min-width: 768px) {
     display: none;
@@ -64,16 +65,19 @@
     font-size: 24px;
     color: white;
     margin-bottom: 24px;
+    position: relative;
 
     a {
       color: white;
       text-decoration: none;
+      position: relative;
     }
   }
 }
 
 .mobileMenu {
   display: inline-block;
+  position: relative;
 
   @media screen and (min-width: 768px) {
     display: none;

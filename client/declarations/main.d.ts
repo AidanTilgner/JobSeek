@@ -46,3 +46,13 @@ export interface JobDescription {
   description: string;
   location: string;
 }
+
+export interface User {
+  id: number;
+  email: string;
+  firstName: string;
+  lastName: string;
+  role: string;
+  createdAt: Date;
+  updatedAt: Date;
+}

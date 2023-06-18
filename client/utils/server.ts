@@ -4,6 +4,9 @@ import { io, Socket } from "socket.io-client";
 export const api = axios.create({
   baseURL: "/api",
   withCredentials: true,
+  headers: {
+    Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+  },
 });
 
 export const socket: Socket = io();

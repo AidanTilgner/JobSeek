@@ -1,9 +1,12 @@
 import { DataSource } from "typeorm";
 import "reflect-metadata";
 import { seedDatabase } from "./seeders";
+import { User } from "./models/user";
+import { Token } from "./models/token";
 
 export const entities = {
-  // put entities here
+  User,
+  Token,
 };
 
 export const dataSource = new DataSource({
@@ -21,4 +24,11 @@ export const initializeDatabase = async () => {
   await seedDatabase();
   console.info("Database seeded");
   return dataSource;
+};
+
+export const getDataStore = () => {
+  if (dataSource) {
+    return dataSource;
+  }
+  return null;
 };
