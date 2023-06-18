@@ -7,6 +7,7 @@ import {
   OneToMany,
 } from "typeorm";
 import { Token } from "./token";
+import { Resume } from "./resume";
 
 @Entity()
 export class User {
@@ -30,6 +31,9 @@ export class User {
 
   @OneToMany(() => Token, (token) => token.user)
   tokens!: Token[];
+
+  @OneToMany(() => Resume, (resume) => resume.user)
+  resumes!: Resume[];
 
   @CreateDateColumn()
   createdAt!: Date;
