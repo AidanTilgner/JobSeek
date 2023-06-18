@@ -9,20 +9,26 @@ import {
 import { Resume } from "./resume";
 
 @Entity()
-export class Skill {
+export class Experience {
   @PrimaryGeneratedColumn()
   id!: number;
 
   @Column({ type: "varchar", length: 255 })
-  name!: string;
+  title!: string;
 
-  @Column({ type: "int" })
-  level!: number;
+  @Column({ type: "varchar", length: 255 })
+  company!: string;
 
   @Column({ type: "varchar", length: 255 })
   description!: string;
 
-  @ManyToOne(() => Resume, (resume) => resume.skills)
+  @Column({ type: "varchar", length: 255 })
+  startDate!: string;
+
+  @Column({ type: "varchar", length: 255 })
+  endDate!: string;
+
+  @ManyToOne(() => Resume, (resume) => resume.experiences)
   resume!: Resume;
 
   @CreateDateColumn()

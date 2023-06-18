@@ -3,10 +3,20 @@ import "reflect-metadata";
 import { seedDatabase } from "./seeders";
 import { User } from "./models/user";
 import { Token } from "./models/token";
+import { Resume } from "./models/resume";
+import { Education } from "./models/education";
+import { Experience } from "./models/experience";
+import { Skill } from "./models/skill";
+import { Project } from "./models/project";
 
 export const entities = {
   User,
   Token,
+  Resume,
+  Education,
+  Experience,
+  Skill,
+  Project,
 };
 
 export const dataSource = new DataSource({

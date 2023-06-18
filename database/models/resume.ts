@@ -9,6 +9,9 @@ import {
 } from "typeorm";
 import { User } from "./user";
 import { Skill } from "./skill";
+import { Project } from "./project";
+import { Experience } from "./experience";
+import { Education } from "./education";
 
 @Entity()
 export class Resume {
@@ -21,11 +24,26 @@ export class Resume {
   @Column({ type: "varchar", length: 255 })
   description!: string;
 
+  @Column({ type: "varchar", nullable: true })
+  location!: string;
+
+  @Column({ type: "varchar", nullable: true })
+  phone!: string;
+
   @ManyToOne(() => User, (user) => user.resumes)
   user!: User;
 
   @OneToMany(() => Skill, (skill) => skill.resume)
   skills!: Skill[];
+
+  @OneToMany(() => Project, (project) => project.resume)
+  projects!: Project[];
+
+  @OneToMany(() => Experience, (experience) => experience.resume)
+  experiences!: Experience[];
+
+  @OneToMany(() => Education, (education) => education.resume)
+  educations!: Education[];
 
   @CreateDateColumn()
   createdAt!: Date;
