@@ -28,7 +28,10 @@ export class Education {
   @Column({ type: "varchar", length: 255 })
   endDate!: string;
 
-  @ManyToOne(() => Resume, (resume) => resume.educations)
+  @Column({ type: "varchar", length: 255 })
+  location!: string;
+
+  @ManyToOne(() => Resume, (resume) => resume.education)
   resume!: Resume;
 
   @CreateDateColumn()

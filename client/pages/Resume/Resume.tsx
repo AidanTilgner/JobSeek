@@ -27,7 +27,7 @@ function Resume() {
 
   useEffect(() => {
     api.get("/applications/resume").then((res) => {
-      console.log(res.data.data);
+      console.log("Resume", res.data);
     });
   }, []);
 
@@ -43,6 +43,10 @@ function Resume() {
           )}
         </Grid.Col>
         <Grid.Col span={12} />
+        <Grid.Col span={12} />
+        <Grid.Col span={12}>
+          <Title order={3}>Personal Information</Title>
+        </Grid.Col>
         <Grid.Col sm={12} md={6} lg={4}>
           <TextInput
             label="Name"
@@ -58,6 +62,24 @@ function Resume() {
             placeholder="Your email..."
             required
             {...form.getInputProps("email")}
+            disabled={disabled}
+          />
+        </Grid.Col>
+        <Grid.Col sm={12} md={6} lg={4}>
+          <TextInput
+            label="Phone"
+            placeholder="Your phone number..."
+            required
+            {...form.getInputProps("phone")}
+            disabled={disabled}
+          />
+        </Grid.Col>
+        <Grid.Col sm={12} md={6} lg={4}>
+          <TextInput
+            label="Location"
+            placeholder="Your location..."
+            required
+            {...form.getInputProps("location")}
             disabled={disabled}
           />
         </Grid.Col>

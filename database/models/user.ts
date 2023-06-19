@@ -34,7 +34,7 @@ export class User {
   @OneToMany(() => Token, (token) => token.user)
   tokens!: Token[];
 
-  @OneToOne(() => Resume, (resume) => resume.user)
+  @OneToOne(() => Resume, (resume) => resume.user, { eager: true })
   @JoinColumn()
   resume!: Resume;
 
