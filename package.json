@@ -9,8 +9,7 @@
     "dev:client": "node esbuild.dev.config.mjs",
     "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
     "build:client": "node esbuild.config.mjs",
-    "build:widgets": "node esbuild.widgets.config.mjs",
-    "build": "npm run build:client && npm run build:widgets",
+    "build": "npm run build:client",
     "typeorm": "typeorm-ts-node-esm",
     "migrations:run": "typeorm-ts-node-esm migration:run -d database/index.ts",
     "migrations:rollback": "typeorm-ts-node-esm migration:revert -d database/index.ts"
