@@ -31,7 +31,6 @@ export interface Project {
   description: string;
   startDate: string;
   endDate: string;
-  skills: string[];
   link: string;
   location_worked_on: string;
 }

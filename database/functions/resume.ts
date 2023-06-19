@@ -295,7 +295,6 @@ export const addProjectToResume = async (
     description,
     startDate,
     endDate,
-    skills,
     link,
     location_worked_on,
   }: {
@@ -303,7 +302,6 @@ export const addProjectToResume = async (
     description: Project["description"];
     startDate: Project["startDate"];
     endDate: Project["endDate"];
-    skills: Project["skills"];
     link: Project["link"];
     location_worked_on: Project["location_worked_on"];
   }
@@ -330,7 +328,6 @@ export const addProjectToResume = async (
     project.description = description;
     project.startDate = startDate;
     project.endDate = endDate;
-    project.skills = skills;
     project.link = link;
     project.location_worked_on = location_worked_on;
     project.resume = resume;
@@ -352,7 +349,6 @@ export const updateProjectOnResume = async (
     description,
     startDate,
     endDate,
-    skills,
     link,
     location_worked_on,
   }: {
@@ -360,7 +356,6 @@ export const updateProjectOnResume = async (
     description: Project["description"];
     startDate: Project["startDate"];
     endDate: Project["endDate"];
-    skills: Project["skills"];
     link: Project["link"];
     location_worked_on: Project["location_worked_on"];
   }
@@ -396,7 +391,6 @@ export const updateProjectOnResume = async (
     project.description = description;
     project.startDate = startDate;
     project.endDate = endDate;
-    project.skills = skills;
     project.link = link;
     project.location_worked_on = location_worked_on;
 
@@ -638,16 +632,9 @@ export const addEducationToResume = async (
     education.startDate = startDate;
     education.endDate = endDate;
     education.location = location;
+    education.resume = resume;
 
     dataSource.manager.save(education);
-
-    const educations = resume.education;
-
-    educations.push(education);
-
-    resume.education = educations;
-
-    await dataSource.manager.save(resume);
 
     return resume;
   } catch (error) {

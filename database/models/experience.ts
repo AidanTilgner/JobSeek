@@ -25,8 +25,8 @@ export class Experience {
   @Column({ type: "varchar", length: 255 })
   startDate!: string;
 
-  @Column({ type: "varchar", length: 255 })
-  endDate!: string;
+  @Column({ type: "varchar", length: 255, nullable: true })
+  endDate!: string | undefined;
 
   @Column({ type: "varchar", length: 255 })
   location!: string;

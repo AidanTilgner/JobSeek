@@ -213,25 +213,10 @@ router.delete("/skill/:skill_id", checkAccess, async (req, res) => {
 
 router.post("/project", checkAccess, async (req, res) => {
   try {
-    const {
-      name,
-      description,
-      startDate,
-      endDate,
-      skills,
-      link,
-      location_worked_on,
-    } = req.body;
+    const { name, description, startDate, endDate, link, location_worked_on } =
+      req.body;
 
-    if (
-      !name ||
-      !description ||
-      !startDate ||
-      !endDate ||
-      !skills ||
-      !link ||
-      !location_worked_on
-    ) {
+    if (!name || !description || !startDate || !link || !location_worked_on) {
       return res.status(400).json({
         success: false,
         message: "Missing required fields.",
@@ -249,7 +234,6 @@ router.post("/project", checkAccess, async (req, res) => {
       description,
       startDate,
       endDate,
-      skills,
       link,
       location_worked_on,
     });
@@ -287,9 +271,7 @@ router.put("/project/:project_id", checkAccess, async (req, res) => {
       !name ||
       !description ||
       !startDate ||
-      !endDate ||
       !skills ||
-      !link ||
       !location_worked_on
     ) {
       return res.status(400).json({
@@ -321,7 +303,6 @@ router.put("/project/:project_id", checkAccess, async (req, res) => {
         description,
         startDate,
         endDate,
-        skills,
         link,
         location_worked_on,
       }
@@ -388,14 +369,7 @@ router.post("/experience", checkAccess, async (req, res) => {
     const { title, company, description, startDate, endDate, location } =
       req.body;
 
-    if (
-      !title ||
-      !company ||
-      !startDate ||
-      !endDate ||
-      !description ||
-      !location
-    ) {
+    if (!title || !company || !startDate || !description || !location) {
       return res.status(400).json({
         success: false,
         message: "Missing required fields.",
@@ -441,7 +415,6 @@ router.put("/experience/:experience_id", checkAccess, async (req, res) => {
       !title ||
       !company ||
       !startDate ||
-      !endDate ||
       !description ||
       !location
     ) {
@@ -534,14 +507,7 @@ router.post("/education", checkAccess, async (req, res) => {
     const { school, degree, startDate, endDate, description, location } =
       req.body;
 
-    if (
-      !school ||
-      !degree ||
-      !startDate ||
-      !endDate ||
-      !description ||
-      !location
-    ) {
+    if (!school || !degree || !startDate || !description || !location) {
       return res.status(400).json({
         success: false,
         message: "Missing required fields.",
@@ -587,7 +553,6 @@ router.put("/education/:education_id", checkAccess, async (req, res) => {
       !school ||
       !degree ||
       !startDate ||
-      !endDate ||
       !description ||
       !location
     ) {

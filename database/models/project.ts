@@ -22,13 +22,10 @@ export class Project {
   @Column({ type: "varchar", length: 255 })
   startDate!: string;
 
-  @Column({ type: "varchar", length: 255 })
+  @Column({ type: "varchar", length: 255, nullable: true })
   endDate!: string;
 
-  @Column({ type: "varchar", length: 255 })
-  skills!: string[];
-
-  @Column({ type: "varchar", length: 255 })
+  @Column({ type: "varchar", length: 255, nullable: true })
   link!: string;
 
   @Column({ type: "varchar", length: 255 })
