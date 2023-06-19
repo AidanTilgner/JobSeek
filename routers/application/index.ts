@@ -12,13 +12,23 @@ router.post("/new/cover-letter", checkAccess, (req, res) => {
   try {
     const socket = getSocket();
 
+    const userId = req["jwtPayload"].id;
+
+    if (!userId) {
+      return res.status(401).json({
+        success: false,
+        message: "Unauthorized.",
+      });
+    }
+
     const stream = req.query.stream || req.body.stream;
 
     if (stream && socket) {
       createCoverLetterStream(
         socket,
         req.body,
-        "application/new/cover-letter:datastream"
+        "application/new/cover-letter:datastream",
+        userId
       );
       return res.status(200).json({
         success: true,

@@ -4,13 +4,24 @@ import {
   getGeneratedCoverLetterStream,
 } from "../../utils/coverLetter";
 import { Request, Response } from "express";
-import { JobDescription, Resume } from "../../declarations/main";
+import { JobDescription } from "../../declarations/main";
 
 export const createCoverLetter = async (req: Request, res: Response) => {
   try {
-    const { jobDescription, resume } = req.body;
+    const payload = req["jwtPayload"];
 
-    const response = await getGeneratedCoverLetter(jobDescription, resume);
+    const userId = payload.id;
+
+    if (!userId) {
+      return res.status(401).json({
+        success: false,
+        message: "Unauthorized.",
+      });
+    }
+
+    const { jobDescription } = req.body;
+
+    const response = await getGeneratedCoverLetter(jobDescription, userId);
 
     res.status(200).json({
       success: response.success,
@@ -28,17 +39,17 @@ export const createCoverLetter = async (req: Request, res: Response) => {
 export const createCoverLetterStream = async (
   socket: Socket,
   payload: unknown,
-  eventName: string
+  eventName: string,
+  userId: number
 ) => {
   try {
-    const { jobDescription, resume } = payload as {
+    const { jobDescription } = payload as {
       jobDescription: JobDescription;
-      resume: Resume;
     };
 
     const response = await getGeneratedCoverLetterStream(
       jobDescription,
-      resume
+      userId
     );
 
     if (!response.success || !response.stream) {

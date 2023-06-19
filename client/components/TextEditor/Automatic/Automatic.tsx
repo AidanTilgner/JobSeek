@@ -115,8 +115,9 @@ function Automatic({
                 setCopied(true);
                 setTimeout(() => {
                   setCopied(false);
-                }, 1000);
+                }, 2000);
               }}
+              variant="filled"
             >
               {copied ? <Check color="green" /> : <Copy />}
             </ActionIcon>

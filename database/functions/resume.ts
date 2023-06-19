@@ -43,19 +43,22 @@ export const newResume = async (userId: number) => {
   }
 };
 
-export const getUserResume = async (userId: number) => {
+export const getUserResume = async (userId: number, loadUser = false) => {
   try {
-    const user = await dataSource.manager.findOne(User, {
+    const resume = await dataSource.manager.findOne(Resume, {
       where: {
-        id: userId,
+        user: {
+          id: userId,
+        },
       },
+      relations: loadUser ? ["user"] : [],
     });
 
-    if (!user) {
+    if (!resume) {
       return null;
     }
 
-    return user.resume;
+    return resume;
   } catch (error) {
     console.error(error);
     return null;

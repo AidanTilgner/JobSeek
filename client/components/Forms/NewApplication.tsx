@@ -9,7 +9,7 @@ import {
   Textarea,
   Title,
 } from "@mantine/core";
-import { Resume, JobDescription } from "../../declarations/main";
+import { JobDescription } from "../../declarations/main";
 import styles from "./NewApplication.module.scss";
 import { api, socket } from "../../utils/server";
 import Automatic from "../TextEditor/Automatic/Automatic";
@@ -20,7 +20,6 @@ function NewApplication() {
 
   const form = useForm<{
     jobDescription: JobDescription;
-    resume: Resume;
   }>({
     initialValues: {
       jobDescription: {
@@ -29,46 +28,22 @@ function NewApplication() {
         description: "",
         location: "",
       },
-      resume: {
-        name: "",
-        email: "",
-        phone: "",
-        location: "",
-        skills: [],
-        experience: [],
-        education: [],
-        projects: [],
-      },
     },
   });
 
   const [coverLetter, setCoverLetter] = useState<string>("");
 
-  // load resume from local storage on mount
   useEffect(() => {
-    const resume = localStorage.getItem("resume");
-    if (resume) {
-      const parsedResume = JSON.parse(resume) as Resume;
-      form.setValues((prev) => {
-        return {
-          ...prev,
-          resume: {
-            name: parsedResume.name,
-            email: parsedResume.email,
-            phone: parsedResume.phone,
-            location: parsedResume.location,
-            skills: parsedResume.skills,
-            experience: parsedResume.experience,
-            education: parsedResume.education,
-            projects: parsedResume.projects,
-          },
-        };
-      });
+    if (coverLetter) {
+      localStorage.setItem("coverLetter", coverLetter);
     }
+  }, [coverLetter]);
 
-    return () => {
-      localStorage.setItem("resume", JSON.stringify(form.values.resume));
-    };
+  useEffect(() => {
+    const coverLetter = localStorage.getItem("coverLetter");
+    if (coverLetter) {
+      setCoverLetter(coverLetter);
+    }
   }, []);
 
   const onSubmit = async () => {
@@ -76,7 +51,6 @@ function NewApplication() {
     setCoverLetter("");
     api.post("/applications/new/cover-letter", {
       jobDescription: form.values.jobDescription,
-      resume: form.values.resume,
       stream: true,
     });
   };

@@ -1,9 +1,9 @@
-import { Resume } from "../declarations/main";
+import { Resume } from "../database/models/resume";
 
 export const getResumeDescribed = (resume: Resume) => {
   const described = `
     Applicant Name: ${resume.name}
-    Applicant Email: ${resume.email}
+    Applicant Email: ${resume.user.email}
     Applicant Location: ${resume.location}
     Applicant Phone: ${resume.phone}
 

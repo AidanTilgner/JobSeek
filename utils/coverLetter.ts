@@ -1,4 +1,6 @@
-import { JobDescription, Resume } from "../declarations/main";
+import { getUserResume } from "../database/functions/resume";
+import { JobDescription } from "../declarations/main";
+import { Resume } from "../database/models/resume";
 import { getChatCompletion, getChatCompletionStream } from "./openai";
 import { getResumeDescribed } from "./resume";
 import { ChatCompletionRequestMessage } from "openai-edge";
@@ -66,9 +68,18 @@ export const getGeneratedCoverLetterMessages = async (
 
 export const getGeneratedCoverLetter = async (
   jobDescription: JobDescription,
-  resume: Resume
+  userId: number
 ) => {
   try {
+    const resume = await getUserResume(userId, true);
+
+    if (!resume) {
+      return {
+        success: false,
+        message: "Something went wrong.",
+      };
+    }
+
     const messages = await getGeneratedCoverLetterMessages(
       jobDescription,
       resume
@@ -92,9 +103,18 @@ export const getGeneratedCoverLetter = async (
 
 export const getGeneratedCoverLetterStream = async (
   jobDescription: JobDescription,
-  resume: Resume
+  userId: number
 ) => {
   try {
+    const resume = await getUserResume(userId, true);
+
+    if (!resume) {
+      return {
+        success: false,
+        stream: null,
+      };
+    }
+
     const messages = await getGeneratedCoverLetterMessages(
       jobDescription,
       resume

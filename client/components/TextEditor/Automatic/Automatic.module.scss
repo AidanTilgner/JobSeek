@@ -11,16 +11,15 @@
   display: flex;
   flex-direction: column;
   gap: 24px;
-  height: 100%;
-  width: 100%;
   flex-grow: 1;
+  max-height: 70%;
   scrollbar-color: var(--background-contrast) var(--background-alt);
   box-sizing: border-box;
   position: relative;
 }
 
 .content {
-  flex-grow: 1;
+  flex-grow: 2;
   overflow-y: scroll;
   scrollbar-width: thin;
   scrollbar-color: var(--background-contrast) var(--background-alt);
@@ -34,7 +33,7 @@
 
 .options {
   position: absolute;
-  bottom: 14px;
+  top: 24px;
   right: 24px;
 }
 
@@ -48,8 +47,6 @@
 }
 
 .controls {
-  position: absolute;
-  bottom: 24px;
-  left: 24px;
-  right: 24px;
+  flex-grow: 1;
+  max-height: 30%;
 }
