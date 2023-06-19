@@ -4,6 +4,7 @@ import { Title, Burger, Button } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { Link } from "react-router-dom";
 import { useUser } from "../../context/User";
+import { logout } from "../../utils/auth";
 
 function Navbar() {
   const [opened, { toggle }] = useDisclosure(false);
@@ -46,6 +47,13 @@ function Navbar() {
               </Link>
             </li>
           )}
+          {user && (
+            <li className={styles.desktopItem}>
+              <Button variant="outline" color="red" onClick={logout}>
+                Logout
+              </Button>
+            </li>
+          )}
         </ul>
       )}
       <ul className={styles.desktopItems}>
@@ -69,6 +77,13 @@ function Navbar() {
             <Link to="/applications/new">
               <Button variant="outline">Apply</Button>
             </Link>
+          </li>
+        )}
+        {user && (
+          <li className={styles.desktopItem}>
+            <Button variant="outline" color="red" onClick={logout}>
+              Logout
+            </Button>
           </li>
         )}
       </ul>

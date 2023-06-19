@@ -57,23 +57,29 @@ export async function loginUser(email: string, password: string) {
       where: {
         email,
       },
+      select: ["id", "email", "password", "firstName", "lastName", "role"],
     });
 
     if (!user) {
       return null;
     }
+
     const isPasswordValid = comparePassword(password, user.password);
     if (!isPasswordValid) {
       return null;
     }
-    return user;
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { password: _, ...rest } = user;
+
+    return rest;
   } catch (error) {
     console.error(error);
     return null;
   }
 }
 
-export async function generateUserAccessToken(user: User) {
+export async function generateUserAccessToken(user: Partial<User>) {
   const accessToken = generateAccessToken({
     id: user.id,
     email: user.email,
@@ -85,7 +91,7 @@ export async function generateUserAccessToken(user: User) {
   return accessToken;
 }
 
-export async function generateUserRefreshToken(user: User) {
+export async function generateUserRefreshToken(user: Partial<User>) {
   const refreshToken = generateRefreshToken({
     id: user.id,
     email: user.email,
@@ -119,6 +125,7 @@ export const getTokenByUserId = async (userId: number) => {
           id: userId,
         },
       },
+      relations: ["user"],
     });
     return token;
   } catch (error) {
@@ -147,12 +154,18 @@ export const addTokenToUser = async (userId: number, refreshToken: string) => {
 
 export const deleteTokenByUserId = async (userId: number) => {
   try {
-    const token = await getTokenByUserId(userId);
-    if (!token) {
+    const tokens = await dataSource.manager.find(Token, {
+      where: {
+        user: {
+          id: userId,
+        },
+      },
+    });
+    if (!tokens.length) {
       return null;
     }
-    await dataSource.manager.delete(Token, token);
-    return token;
+    const deleted = await dataSource.manager.delete(Token, tokens);
+    return deleted;
   } catch (error) {
     console.error(error);
     return null;

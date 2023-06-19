@@ -7,11 +7,12 @@ import {
   Button,
   PasswordInput,
   Group,
+  Text,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { api } from "../../utils/server";
 import { showNotification } from "@mantine/notifications";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useUser } from "../../context/User";
 
 function Signup() {
@@ -77,7 +78,7 @@ function Signup() {
 
               const { data } = res;
 
-              const { accessToken, refreshToken } = data;
+              const { accessToken, refreshToken } = data.data;
 
               localStorage.setItem("accessToken", accessToken);
               localStorage.setItem("refreshToken", refreshToken);
@@ -144,6 +145,11 @@ function Signup() {
             <Grid.Col span={12} />
             <Grid.Col>
               <Group position="right">
+                <Link to="/auth/login">
+                  <Text color="white" underline>
+                    Login instead
+                  </Text>
+                </Link>
                 <Button type="submit">Sign Up</Button>
               </Group>
             </Grid.Col>

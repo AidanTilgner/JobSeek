@@ -6,6 +6,7 @@ import {
   loginUser,
   signupUser,
   deleteTokenByUserId,
+  addTokenToUser,
 } from "../../database/functions/user";
 import { checkAccess } from "../../middleware/auth";
 import { verifyRefreshToken } from "../../utils/crypto";
@@ -67,6 +68,8 @@ router.post("/signup", async (req, res) => {
     const accessToken = await generateUserAccessToken(user);
     const refreshToken = await generateUserRefreshToken(user);
 
+    addTokenToUser(user.id, refreshToken);
+
     return res.status(200).json({
       message: "User created successfully",
       data: {
@@ -103,12 +106,17 @@ router.post("/login", async (req, res) => {
       });
     }
 
+    const accessToken = await generateUserAccessToken(user);
+    const refreshToken = await generateUserRefreshToken(user);
+
+    addTokenToUser(user.id, refreshToken);
+
     return res.status(200).json({
       message: "User logged in successfully",
       data: {
         user,
-        accessToken: await generateUserAccessToken(user),
-        refreshToken: await generateUserRefreshToken(user),
+        accessToken,
+        refreshToken,
       },
     });
   } catch (error) {
@@ -151,7 +159,7 @@ router.post("/refresh", async (req, res) => {
       });
     }
 
-    const accessToken = generateUserAccessToken(token.user);
+    const accessToken = await generateUserAccessToken(token.user);
 
     return res.status(200).json({
       message: "Token refreshed successfully",

@@ -40,12 +40,3 @@ export const recieveEvents = (
 
   return evntSrc;
 };
-
-export const logout = async () => {
-  console.log("Logging out");
-  const res = await api.post("/users/logout");
-  localStorage.removeItem("accessToken");
-  localStorage.removeItem("refreshToken");
-  window.location.href = "/auth/login";
-  return res;
-};

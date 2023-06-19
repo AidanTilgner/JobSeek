@@ -1,6 +1,7 @@
 import React, { createContext, useEffect, useState } from "react";
 import { User } from "../declarations/main";
-import { api, logout } from "../utils/server";
+import { api } from "../utils/server";
+import { checkTokenIsExpired, logout } from "../utils/auth";
 
 interface UserContextInterface {
   user: User | null;
@@ -33,15 +34,26 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     if (!accessToken || !refreshToken) {
       return;
     }
-    api.get("/users/me").then((res) => {
-      setUser(res.data);
-    });
+    api
+      .get("/users/me", {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+      .then((res) => {
+        setUser(res.data);
+      });
   };
 
   const refreshUser = async () => {
     const accessToken = localStorage.getItem("accessToken");
     const refreshToken = localStorage.getItem("refreshToken");
     if (!accessToken || !refreshToken) {
+      return;
+    }
+    const isExpired = checkTokenIsExpired(accessToken);
+    if (!isExpired) {
+      loadUser();
       return;
     }
     api
@@ -52,21 +64,17 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
         const { accessToken, refreshToken } = res.data.data;
         localStorage.setItem("accessToken", accessToken);
         localStorage.setItem("refreshToken", refreshToken);
+        loadUser();
       })
       .catch((err) => {
-        console.log("Error refreshing user");
         console.error(err);
         logout();
       });
   };
 
   useEffect(() => {
-    refreshUser().then(() => {
-      loadUser();
-    });
+    refreshUser();
   }, []);
-
-  console.log("User: ", user);
 
   const value = { user, setUser, reloadUser: loadUser, refreshUser };
 

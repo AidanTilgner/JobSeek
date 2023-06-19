@@ -7,12 +7,13 @@ import {
   Button,
   PasswordInput,
   Group,
+  Text,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { api } from "../../utils/server";
 import { showNotification } from "@mantine/notifications";
 import { useUser } from "../../context/User";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Login() {
   const { reloadUser } = useUser();
@@ -87,6 +88,11 @@ function Login() {
             <Grid.Col span={12} />
             <Grid.Col>
               <Group position="right">
+                <Link to="/auth/signup">
+                  <Text color="white" underline>
+                    Sign up instead
+                  </Text>
+                </Link>
                 <Button type="submit">Login</Button>
               </Group>
             </Grid.Col>
