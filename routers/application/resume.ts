@@ -1,7 +1,6 @@
 import { Router } from "express";
 import {
   addSkillToResume,
-  deleteResume,
   getUserResume,
   updateResume,
   updateSkillOnResume,
@@ -56,29 +55,6 @@ router.put("/", checkAccess, async (req, res) => {
       success: false,
       message: "Something went wrong.",
       data: null,
-    });
-  }
-});
-
-router.delete("", checkAccess, async (req, res) => {
-  try {
-    const user = (
-      req as unknown as {
-        jwtPayload: unknown;
-      }
-    ).jwtPayload;
-
-    await deleteResume((user as User).id);
-
-    return res.status(200).json({
-      success: true,
-      message: "Resume deleted.",
-    });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({
-      success: false,
-      message: "Something went wrong.",
     });
   }
 });

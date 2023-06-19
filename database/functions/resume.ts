@@ -184,16 +184,9 @@ export const addSkillToResume = async (
     skill.name = name;
     skill.level = level;
     skill.description = description;
+    skill.resume = resume;
 
     dataSource.manager.save(skill);
-
-    const skills = resume.skills;
-
-    skills.push(skill);
-
-    resume.skills = skills;
-
-    await dataSource.manager.save(resume);
 
     return resume;
   } catch (error) {
@@ -340,16 +333,9 @@ export const addProjectToResume = async (
     project.skills = skills;
     project.link = link;
     project.location_worked_on = location_worked_on;
+    project.resume = resume;
 
     dataSource.manager.save(project);
-
-    const projects = resume.projects;
-
-    projects.push(project);
-
-    resume.projects = projects;
-
-    await dataSource.manager.save(resume);
 
     return resume;
   } catch (error) {
@@ -505,16 +491,9 @@ export const addExperienceToResume = async (
     experience.startDate = startDate;
     experience.endDate = endDate;
     experience.location = location;
+    experience.resume = resume;
 
     dataSource.manager.save(experience);
-
-    const experiences = resume.experience;
-
-    experiences.push(experience);
-
-    resume.experience = experiences;
-
-    await dataSource.manager.save(resume);
 
     return resume;
   } catch (error) {

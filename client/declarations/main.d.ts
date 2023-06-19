@@ -1,10 +1,12 @@
 export interface Skill {
+  id?: number;
   name: string;
   level: number;
   description: string;
 }
 
 export interface Experience {
+  id?: number;
   title: string;
   company: string;
   startDate: string;
@@ -14,6 +16,7 @@ export interface Experience {
 }
 
 export interface Education {
+  id?: number;
   school: string;
   degree: string;
   startDate: string;
@@ -23,6 +26,7 @@ export interface Education {
 }
 
 export interface Project {
+  id?: number;
   name: string;
   description: string;
   startDate: string;

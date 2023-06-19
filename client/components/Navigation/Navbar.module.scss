@@ -8,6 +8,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  background-color: var(--background-color);
+  z-index: 100;
 
   @media (min-width: 768px) {
     padding: 24px 56px;
@@ -22,6 +24,10 @@
   img {
     width: 36px;
     aspect-ratio: 1/1;
+  }
+
+  a {
+    text-decoration: none;
   }
 
   h2 {
