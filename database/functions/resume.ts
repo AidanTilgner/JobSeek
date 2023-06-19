@@ -3,16 +3,7 @@ import { Resume } from "../models/resume";
 import { Skill } from "../models/skill";
 import { User } from "../models/user";
 
-export const newResume = async (
-  userId: number,
-  {
-    name,
-    description,
-  }: {
-    name: Resume["name"];
-    description: Resume["description"];
-  }
-) => {
+export const newResume = async (userId: number) => {
   try {
     const user = await dataSource.manager.findOne(User, {
       where: {
@@ -26,12 +17,21 @@ export const newResume = async (
 
     const resume = new Resume();
 
-    resume.name = name;
-    resume.description = description;
-
-    resume.user = user;
+    resume.name = `${user.firstName} ${user.lastName}`;
+    resume.description =
+      "I am a distinguished professional with a passion in many areas.";
 
     await dataSource.manager.save(resume);
+
+    // Set the updated values for the user entity
+    await dataSource.manager
+      .createQueryBuilder()
+      .update(User)
+      .set({
+        resume: resume,
+      })
+      .where("id = :id", { id: userId })
+      .execute();
 
     return resume;
   } catch (error) {
@@ -40,40 +40,32 @@ export const newResume = async (
   }
 };
 
-export const getResumes = async (userId: number) => {
+export const getUserResume = async (userId: number) => {
   try {
     const user = await dataSource.manager.findOne(User, {
       where: {
         id: userId,
       },
-      relations: ["resumes"],
     });
 
     if (!user) {
       return null;
     }
 
-    return user.resumes;
+    return user.resume;
   } catch (error) {
     console.error(error);
     return null;
   }
 };
 
-export const getResume = async (userId: number, resumeId: number) => {
+export const getResume = async (resumeId: number) => {
   try {
-    const user = await dataSource.manager.findOne(User, {
+    const resume = await dataSource.manager.findOne(Resume, {
       where: {
-        id: userId,
+        id: resumeId,
       },
-      relations: ["resumes"],
     });
-
-    if (!user) {
-      return null;
-    }
-
-    const resume = user.resumes.find((resume) => resume.id === resumeId);
 
     if (!resume) {
       return null;
@@ -88,7 +80,6 @@ export const getResume = async (userId: number, resumeId: number) => {
 
 export const updateResume = async (
   userId: number,
-  resumeId: number,
   {
     name,
     description,
@@ -102,45 +93,41 @@ export const updateResume = async (
       where: {
         id: userId,
       },
-      relations: ["resumes"],
     });
 
     if (!user) {
       return null;
     }
 
-    const resume = user.resumes.find((resume) => resume.id === resumeId);
-
-    if (!resume) {
+    if (!user.resume) {
       return null;
     }
 
-    resume.name = name;
-    resume.description = description;
+    user.resume.name = name;
+    user.resume.description = description;
 
-    await dataSource.manager.save(resume);
+    await dataSource.manager.save(user.resume);
 
-    return resume;
+    return user.resume;
   } catch (error) {
     console.error(error);
     return null;
   }
 };
 
-export const deleteResume = async (userId: number, resumeId: number) => {
+export const deleteResume = async (userId: number) => {
   try {
     const user = await dataSource.manager.findOne(User, {
       where: {
         id: userId,
       },
-      relations: ["resumes"],
     });
 
     if (!user) {
       return null;
     }
 
-    const resume = user.resumes.find((resume) => resume.id === resumeId);
+    const resume = user.resume;
 
     if (!resume) {
       return null;
@@ -173,14 +160,13 @@ export const addSkillToResume = async (
       where: {
         id: userId,
       },
-      relations: ["resumes"],
     });
 
     if (!user) {
       return null;
     }
 
-    const resume = user.resumes.find((resume) => resume.id === resumeId);
+    const resume = user.resume;
 
     if (!resume) {
       return null;

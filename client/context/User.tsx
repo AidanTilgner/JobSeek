@@ -41,7 +41,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
         },
       })
       .then((res) => {
-        setUser(res.data);
+        setUser(res.data.data);
       });
   };
 

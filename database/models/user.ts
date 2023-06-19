@@ -5,6 +5,8 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   OneToMany,
+  OneToOne,
+  JoinColumn,
 } from "typeorm";
 import { Token } from "./token";
 import { Resume } from "./resume";
@@ -32,8 +34,9 @@ export class User {
   @OneToMany(() => Token, (token) => token.user)
   tokens!: Token[];
 
-  @OneToMany(() => Resume, (resume) => resume.user)
-  resumes!: Resume[];
+  @OneToOne(() => Resume, (resume) => resume.user)
+  @JoinColumn()
+  resume!: Resume;
 
   @CreateDateColumn()
   createdAt!: Date;

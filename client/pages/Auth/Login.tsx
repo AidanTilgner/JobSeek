@@ -38,26 +38,44 @@ function Login() {
           className={styles.form__body}
           onSubmit={form.onSubmit(
             async (values) => {
-              const res = await api.post("/users/login", {
-                email: values.email,
-                password: values.password,
-              });
+              try {
+                const res = await api.post("/users/login", {
+                  email: values.email,
+                  password: values.password,
+                });
 
-              const { data } = res;
+                if (!res.data.data) {
+                  showNotification({
+                    title: "Error",
+                    message: res.data.errors[0],
+                    color: "red",
+                  });
+                  return;
+                }
 
-              const { accessToken, refreshToken } = data.data;
+                const { data } = res;
 
-              localStorage.setItem("accessToken", accessToken);
-              localStorage.setItem("refreshToken", refreshToken);
+                const { accessToken, refreshToken } = data.data;
 
-              showNotification({
-                title: "Success",
-                message: "You have successfully logged in",
-              });
+                localStorage.setItem("accessToken", accessToken);
+                localStorage.setItem("refreshToken", refreshToken);
 
-              reloadUser();
+                showNotification({
+                  title: "Success",
+                  message: "You have successfully logged in",
+                });
 
-              navigate("/");
+                reloadUser();
+
+                navigate("/");
+              } catch (error) {
+                console.error(error);
+                showNotification({
+                  title: "Error",
+                  message: "Something went wrong",
+                  color: "red",
+                });
+              }
             },
             (errors) => {
               showNotification({

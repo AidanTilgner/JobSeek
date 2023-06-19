@@ -7,6 +7,7 @@ import {
   deleteResume,
   updateResume,
   addSkillToResume,
+  getUserResume,
 } from "../../database/functions/resume";
 import { User } from "../../database/models/user";
 
@@ -77,12 +78,11 @@ router.post("/new/resume", checkAccess, async (req, res) => {
   }
 });
 
-router.put("/resume/:resume_id", checkAccess, async (req, res) => {
+router.put("/resume", checkAccess, async (req, res) => {
   try {
     const { name, description } = req.body;
-    const { resume_id } = req.params;
 
-    if (!resume_id || !name || !description) {
+    if (!name || !description) {
       return res.status(400).json({
         success: false,
         message: "Missing required fields.",
@@ -95,9 +95,7 @@ router.put("/resume/:resume_id", checkAccess, async (req, res) => {
       }
     ).jwtPayload;
 
-    const parsedResumeID = Number(resume_id);
-
-    const resume = await updateResume((user as User).id, parsedResumeID, {
+    const resume = await updateResume((user as User).id, {
       name,
       description,
     });
@@ -117,26 +115,15 @@ router.put("/resume/:resume_id", checkAccess, async (req, res) => {
   }
 });
 
-router.delete("/resume/:resume_id", checkAccess, async (req, res) => {
+router.delete("/resume", checkAccess, async (req, res) => {
   try {
-    const { resume_id } = req.params;
-
-    if (!resume_id) {
-      return res.status(400).json({
-        success: false,
-        message: "Missing required fields.",
-      });
-    }
-
     const user = (
       req as unknown as {
         jwtPayload: unknown;
       }
     ).jwtPayload;
 
-    const parsedResumeID = Number(resume_id);
-
-    await deleteResume((user as User).id, parsedResumeID);
+    await deleteResume((user as User).id);
 
     return res.status(200).json({
       success: true,
@@ -181,6 +168,31 @@ router.post("/resume/:resume_id/skill", checkAccess, async (req, res) => {
       success: true,
       message: "Skill added.",
       data: skill,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      message: "Something went wrong.",
+      data: null,
+    });
+  }
+});
+
+router.get("/resume", checkAccess, async (req, res) => {
+  try {
+    const user = (
+      req as unknown as {
+        jwtPayload: unknown;
+      }
+    ).jwtPayload;
+
+    const resume = await getUserResume((user as User).id);
+
+    return res.status(200).json({
+      success: true,
+      message: "Resume fetched.",
+      data: resume,
     });
   } catch (error) {
     console.error(error);

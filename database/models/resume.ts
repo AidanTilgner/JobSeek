@@ -5,7 +5,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   OneToMany,
-  ManyToOne,
+  OneToOne,
 } from "typeorm";
 import { User } from "./user";
 import { Skill } from "./skill";
@@ -30,20 +30,26 @@ export class Resume {
   @Column({ type: "varchar", nullable: true })
   phone!: string;
 
-  @ManyToOne(() => User, (user) => user.resumes)
+  @OneToOne(() => User, (user) => user.resume)
   user!: User;
 
-  @OneToMany(() => Skill, (skill) => skill.resume)
+  @OneToMany(() => Skill, (skill) => skill.resume, {
+    eager: true,
+  })
   skills!: Skill[];
 
-  @OneToMany(() => Project, (project) => project.resume)
+  @OneToMany(() => Project, (project) => project.resume, { eager: true })
   projects!: Project[];
 
-  @OneToMany(() => Experience, (experience) => experience.resume)
-  experiences!: Experience[];
+  @OneToMany(() => Experience, (experience) => experience.resume, {
+    eager: true,
+  })
+  experience!: Experience[];
 
-  @OneToMany(() => Education, (education) => education.resume)
-  educations!: Education[];
+  @OneToMany(() => Education, (education) => education.resume, {
+    eager: true,
+  })
+  education!: Education[];
 
   @CreateDateColumn()
   createdAt!: Date;

@@ -3,4 +3,4 @@ node_modules
 
 build
 
-datastore/database.sqlite
+database.sqlite

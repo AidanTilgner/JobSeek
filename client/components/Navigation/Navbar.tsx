@@ -42,6 +42,11 @@ function Navbar() {
           )}
           {user && (
             <li onClick={toggle} className={styles.mobileItem}>
+              <Link to="/resume">Resume</Link>
+            </li>
+          )}
+          {user && (
+            <li onClick={toggle} className={styles.mobileItem}>
               <Link to="/applications/new">
                 <Button variant="outline">Apply</Button>
               </Link>
@@ -70,6 +75,12 @@ function Navbar() {
             <Link to="/auth/login">
               <Button variant="filled">Login</Button>
             </Link>
+          </li>
+        )}
+
+        {user && (
+          <li onClick={toggle} className={styles.mobileItem}>
+            <Link to="/resume">Resume</Link>
           </li>
         )}
         {user && (

@@ -7,6 +7,7 @@ import {
 } from "../../utils/crypto";
 import { User } from "../models/user";
 import { Token } from "../models/token";
+import { newResume } from "./resume";
 
 export async function signupUser({
   email,
@@ -29,6 +30,8 @@ export async function signupUser({
     user.lastName = lastName;
     user.role = role;
     await dataSource.manager.save(user);
+
+    newResume(user.id);
 
     return user;
   } catch (error) {
@@ -57,7 +60,7 @@ export async function loginUser(email: string, password: string) {
       where: {
         email,
       },
-      select: ["id", "email", "password", "firstName", "lastName", "role"],
+      loadEagerRelations: false,
     });
 
     if (!user) {
@@ -74,7 +77,7 @@ export async function loginUser(email: string, password: string) {
 
     return rest;
   } catch (error) {
-    console.error(error);
+    console.error("Error logging in user: ", error);
     return null;
   }
 }

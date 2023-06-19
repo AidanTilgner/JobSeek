@@ -8,6 +8,7 @@ import NewApplication from "./components/Forms/NewApplication";
 import Signup from "./pages/Auth/Signup";
 import Login from "./pages/Auth/Login";
 import Main from "./Layouts/Main";
+import Resume from "./pages/Resume/Resume";
 
 function App() {
   return (
@@ -43,6 +44,9 @@ function App() {
             <Route index element={<Home />} />
             <Route path="applications">
               <Route path="new" element={<NewApplication />} />
+            </Route>
+            <Route path="resume">
+              <Route index element={<Resume />} />
             </Route>
             <Route path="auth">
               <Route path="signup" element={<Signup />} />

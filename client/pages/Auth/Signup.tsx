@@ -69,28 +69,37 @@ function Signup() {
           className={styles.form__body}
           onSubmit={form.onSubmit(
             async (values) => {
-              const res = await api.post("/users/signup", {
-                email: values.email,
-                firstName: values.firstName,
-                lastName: values.lastName,
-                password: values.password,
-              });
+              try {
+                const res = await api.post("/users/signup", {
+                  email: values.email,
+                  firstName: values.firstName,
+                  lastName: values.lastName,
+                  password: values.password,
+                });
 
-              const { data } = res;
+                const { data } = res;
 
-              const { accessToken, refreshToken } = data.data;
+                const { accessToken, refreshToken } = data.data;
 
-              localStorage.setItem("accessToken", accessToken);
-              localStorage.setItem("refreshToken", refreshToken);
+                localStorage.setItem("accessToken", accessToken);
+                localStorage.setItem("refreshToken", refreshToken);
 
-              showNotification({
-                title: "Success",
-                message: "You have successfully signed up",
-              });
+                showNotification({
+                  title: "Success",
+                  message: "You have successfully signed up",
+                });
 
-              reloadUser();
+                reloadUser();
 
-              navigate("/");
+                navigate("/");
+              } catch (err) {
+                console.error(err);
+                showNotification({
+                  title: "Error",
+                  message: "Something went wrong",
+                  color: "red",
+                });
+              }
             },
             (errors) => {
               showNotification({

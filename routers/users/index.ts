@@ -7,6 +7,7 @@ import {
   signupUser,
   deleteTokenByUserId,
   addTokenToUser,
+  getUserById,
 } from "../../database/functions/user";
 import { checkAccess } from "../../middleware/auth";
 import { verifyRefreshToken } from "../../utils/crypto";
@@ -177,13 +178,22 @@ router.post("/refresh", async (req, res) => {
   }
 });
 
-router.get("/me", checkAccess, (req, res) => {
+router.get("/me", checkAccess, async (req, res) => {
   try {
-    const user = (
+    const payload = (
       req as unknown as {
         jwtPayload: unknown;
       }
     ).jwtPayload;
+
+    if (!payload || !("id" in (payload as Record<string, unknown>))) {
+      return res.status(200).json({
+        message: "User could not be retrieved",
+        data: null,
+      });
+    }
+
+    const user = await getUserById((payload as User).id);
 
     return res.status(200).json({
       message: "User retrieved successfully",
