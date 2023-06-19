@@ -1,10 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "@mantine/form";
-import { Button, Grid, Group, TextInput, Textarea, Title } from "@mantine/core";
+import {
+  Button,
+  Grid,
+  Group,
+  Text,
+  TextInput,
+  Textarea,
+  Title,
+} from "@mantine/core";
 import { Resume, JobDescription } from "../../declarations/main";
 import styles from "./NewApplication.module.scss";
 import { api, socket } from "../../utils/server";
 import Automatic from "../TextEditor/Automatic/Automatic";
+import { useUser } from "../../context/User";
 
 function NewApplication() {
   const [loading, setLoading] = useState<boolean>(false);
@@ -88,9 +97,16 @@ function NewApplication() {
     };
   }, []);
 
+  const { user } = useUser();
+
+  const disabled = !user;
+
   return (
     <div className={styles.newApplication}>
       <Title order={1}>Apply for a Job</Title>
+      {!user && (
+        <Text color="red">You must be signed in to use this feature.</Text>
+      )}
       <br />
       <br />
       <Grid
@@ -118,6 +134,7 @@ function NewApplication() {
                   placeholder="Software Engineer"
                   withAsterisk
                   {...form.getInputProps("jobDescription.title")}
+                  disabled={disabled}
                 />
               </Grid.Col>
               <Grid.Col sm={12} md={6}>
@@ -126,6 +143,7 @@ function NewApplication() {
                   placeholder="Google"
                   withAsterisk
                   {...form.getInputProps("jobDescription.company")}
+                  disabled={disabled}
                 />
               </Grid.Col>
               <Grid.Col sm={12} md={6}>
@@ -134,6 +152,7 @@ function NewApplication() {
                   placeholder="Mountain View, CA"
                   withAsterisk
                   {...form.getInputProps("jobDescription.location")}
+                  disabled={disabled}
                 />
               </Grid.Col>
               <Grid.Col sm={12} md={12}>
@@ -142,6 +161,7 @@ function NewApplication() {
                   placeholder="Job Description"
                   withAsterisk
                   {...form.getInputProps("jobDescription.description")}
+                  disabled={disabled}
                 />
               </Grid.Col>
               <Grid.Col sm={12} md={12} />
@@ -180,6 +200,7 @@ function NewApplication() {
                 onClearContent={() => {
                   setCoverLetter("");
                 }}
+                disabled={disabled}
               />
             </div>
           </div>

@@ -13,7 +13,9 @@ function Navbar() {
     <div className={styles.navbar}>
       <div className={styles.name}>
         <img src="/assets/branding/logo.svg" alt="Logo" />
-        <Title order={2}>JobSeek</Title>
+        <Link to="/">
+          <Title order={2}>JobSeek</Title>
+        </Link>
       </div>
       <div className={styles.mobileMenu}>
         <Burger opened={opened} onClick={toggle} />

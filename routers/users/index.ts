@@ -5,10 +5,38 @@ import {
   getTokenByUserId,
   loginUser,
   signupUser,
+  deleteTokenByUserId,
 } from "../../database/functions/user";
 import { checkAccess } from "../../middleware/auth";
+import { verifyRefreshToken } from "../../utils/crypto";
+import { User } from "../../database/models/user";
 
 const router = Router();
+
+router.post("/logout", async (req, res) => {
+  try {
+    const { refreshToken } = req.body;
+
+    const payload = refreshToken
+      ? await verifyRefreshToken(refreshToken)
+      : null;
+
+    const userID = (payload as User)?.id;
+
+    const deleted = await deleteTokenByUserId(userID);
+
+    return res.status(200).json({
+      message: "User logged out successfully",
+      data: deleted,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      message: "Internal server error",
+      data: null,
+    });
+  }
+});
 
 router.post("/signup", async (req, res) => {
   try {
@@ -103,7 +131,18 @@ router.post("/refresh", async (req, res) => {
       });
     }
 
-    const token = await getTokenByUserId(refreshToken);
+    const payload = await verifyRefreshToken(refreshToken);
+
+    if (!payload) {
+      return res.status(401).json({
+        message: "Invalid token",
+        data: null,
+      });
+    }
+
+    const userID = (payload as User).id;
+
+    const token = await getTokenByUserId(userID);
 
     if (!token) {
       return res.status(401).json({

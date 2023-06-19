@@ -29,6 +29,13 @@
     padding: 0;
     font-weight: 600;
     font-family: var(--font-family);
+    color: white;
+    text-decoration: none;
+    transition: all 0.2s ease-in-out;
+
+    &:hover {
+      opacity: 0.75;
+    }
   }
 }
 

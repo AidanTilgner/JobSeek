@@ -12,6 +12,7 @@ interface AutomaticProps {
   onClearContent?: () => void;
   loading?: boolean;
   editable?: boolean;
+  disabled?: boolean;
 }
 
 function Automatic({
@@ -20,6 +21,7 @@ function Automatic({
   onClearContent,
   loading: loadingProps,
   editable = true,
+  disabled = false,
 }: AutomaticProps) {
   const [suggestion, setSuggestion] = useState<string>("");
 
@@ -90,7 +92,7 @@ function Automatic({
             dangerouslySetInnerHTML={{
               __html: getFormattedContent(content),
             }}
-            contentEditable={editable}
+            contentEditable={editable && !disabled}
             ref={contentRef}
             onBlur={() => {
               onUpdate(contentRef.current?.innerHTML || "", "replace");
@@ -141,6 +143,7 @@ function Automatic({
                 handleSubmit();
               }
             }}
+            disabled={disabled}
           />
           <Button onClick={handleSubmit}>Submit</Button>
         </Group>

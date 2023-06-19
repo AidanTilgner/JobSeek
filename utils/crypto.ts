@@ -26,14 +26,25 @@ export const generateRefreshToken = (payload: any) => {
   return jwt.sign(payload, REFRESH_TOKEN_SECRET, { expiresIn: "7d" });
 };
 
-export const verifyAccessToken = (token: string) => {
-  if (!ACCESS_TOKEN_SECRET) throw new Error("ACCESS_TOKEN_SECRET not found");
+export const verifyAccessToken = async (token: string) => {
+  try {
+    if (!ACCESS_TOKEN_SECRET) throw new Error("ACCESS_TOKEN_SECRET not found");
 
-  return jwt.verify(token, ACCESS_TOKEN_SECRET);
+    return jwt.verify(token, ACCESS_TOKEN_SECRET);
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
 };
 
-export const verifyRefreshToken = (token: string) => {
-  if (!REFRESH_TOKEN_SECRET) throw new Error("REFRESH_TOKEN_SECRET not found");
+export const verifyRefreshToken = async (token: string) => {
+  try {
+    if (!REFRESH_TOKEN_SECRET)
+      throw new Error("REFRESH_TOKEN_SECRET not found");
 
-  return jwt.verify(token, REFRESH_TOKEN_SECRET);
+    return jwt.verify(token, REFRESH_TOKEN_SECRET);
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
 };

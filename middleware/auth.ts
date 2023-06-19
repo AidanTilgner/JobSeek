@@ -15,7 +15,7 @@ export const checkAccess = async (
       });
     }
 
-    const payload = verifyAccessToken(accessToken);
+    const payload = await verifyAccessToken(accessToken);
 
     if (!payload) {
       return res.status(401).json({
