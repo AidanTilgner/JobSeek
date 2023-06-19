@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { FormEventHandler, useEffect, useState } from "react";
 import { useForm } from "@mantine/form";
 import {
   Button,
@@ -14,6 +14,7 @@ import styles from "./NewApplication.module.scss";
 import { api, socket } from "../../utils/server";
 import Automatic from "../TextEditor/Automatic/Automatic";
 import { useUser } from "../../context/User";
+import { showNotification } from "@mantine/notifications";
 
 function NewApplication() {
   const [loading, setLoading] = useState<boolean>(false);
@@ -27,6 +28,35 @@ function NewApplication() {
         company: "",
         description: "",
         location: "",
+        recruiter_name: "",
+      },
+    },
+    validate: {
+      jobDescription: {
+        title: (value) => {
+          if (!value) {
+            return "Job title is required";
+          }
+          return null;
+        },
+        company: (value) => {
+          if (!value) {
+            return "Company is required";
+          }
+          return null;
+        },
+        description: (value) => {
+          if (!value) {
+            return "Job description is required";
+          }
+          return null;
+        },
+        location: (value) => {
+          if (!value) {
+            return "Location is required";
+          }
+          return null;
+        },
       },
     },
   });
@@ -46,7 +76,19 @@ function NewApplication() {
     }
   }, []);
 
-  const onSubmit = async () => {
+  const onSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
+    event.preventDefault();
+    form.validate();
+    const isValid = form.isValid();
+
+    if (!isValid) {
+      showNotification({
+        title: "Please fill out all required fields",
+        message: "Please fill out all required fields",
+        color: "red",
+      });
+      return;
+    }
     setLoading(true);
     setCoverLetter("");
     api.post("/applications/new/cover-letter", {
@@ -96,11 +138,7 @@ function NewApplication() {
             height: "100%",
           }}
         >
-          <form
-            onSubmit={form.onSubmit(() => {
-              onSubmit();
-            })}
-          >
+          <form onSubmit={onSubmit}>
             <Grid>
               <Grid.Col sm={12} md={6}>
                 <TextInput
@@ -126,6 +164,14 @@ function NewApplication() {
                   placeholder="Mountain View, CA"
                   withAsterisk
                   {...form.getInputProps("jobDescription.location")}
+                  disabled={disabled}
+                />
+              </Grid.Col>
+              <Grid.Col sm={12} md={6}>
+                <TextInput
+                  label="Recruiter Name"
+                  placeholder="John Doe"
+                  {...form.getInputProps("jobDescription.recruiter_name")}
                   disabled={disabled}
                 />
               </Grid.Col>

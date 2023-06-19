@@ -45,4 +45,5 @@ export interface JobDescription {
   company: string;
   description: string;
   location: string;
+  recruiter_name: string | undefined;
 }

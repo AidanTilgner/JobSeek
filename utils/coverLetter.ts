@@ -30,6 +30,12 @@ export const getCoverLetterUserPrompt = (
 
     "${jobDescription.description}"
 
+    ${
+      jobDescription.recruiter_name
+        ? `The recruiter's name is ${jobDescription.recruiter_name}.`
+        : ""
+    }
+
     Here is some resume information for ${
       resume.name
     }, the applicant, for your reference:
