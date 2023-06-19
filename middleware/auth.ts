@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { verifyAccessToken } from "../utils/crypto";
+import { getUserByEmail } from "../database/functions/user";
 
 export const checkAccess = async (
   req: Request,
@@ -21,6 +22,15 @@ export const checkAccess = async (
       return res.status(401).json({
         message: "Unauthorized",
       });
+    }
+
+    if (typeof payload !== "string" && "email" in payload && "id" in payload) {
+      const user = await getUserByEmail(payload.email);
+      if (!user) {
+        return res.status(401).json({
+          message: "Unauthorized",
+        });
+      }
     }
 
     (
