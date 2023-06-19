@@ -21,11 +21,11 @@ import { User } from "../../database/models/user";
 
 const router = Router();
 
-router.put("", checkAccess, async (req, res) => {
+router.put("/", checkAccess, async (req, res) => {
   try {
-    const { name, description } = req.body;
+    const { name, description, phone, location } = req.body;
 
-    if (!name || !description) {
+    if (!name || !description || !phone || !location) {
       return res.status(400).json({
         success: false,
         message: "Missing required fields.",
@@ -41,6 +41,8 @@ router.put("", checkAccess, async (req, res) => {
     const resume = await updateResume((user as User).id, {
       name,
       description,
+      phone,
+      location,
     });
 
     return res.status(200).json({

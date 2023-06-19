@@ -86,9 +86,13 @@ export const updateResume = async (
   {
     name,
     description,
+    location,
+    phone,
   }: {
     name: Resume["name"];
     description: Resume["description"];
+    location: Resume["location"];
+    phone: Resume["phone"];
   }
 ) => {
   try {
@@ -108,6 +112,8 @@ export const updateResume = async (
 
     user.resume.name = name;
     user.resume.description = description;
+    user.resume.phone = phone;
+    user.resume.location = location;
 
     await dataSource.manager.save(user.resume);
 

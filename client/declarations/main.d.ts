@@ -1,5 +1,6 @@
 export interface Skill {
   name: string;
+  level: number;
   description: string;
 }
 
@@ -9,6 +10,7 @@ export interface Experience {
   startDate: string;
   endDate: string;
   description: string;
+  location: string;
 }
 
 export interface Education {
@@ -17,6 +19,7 @@ export interface Education {
   startDate: string;
   endDate: string;
   description: string;
+  location: string;
 }
 
 export interface Project {
@@ -31,7 +34,7 @@ export interface Project {
 
 export interface Resume {
   name: string;
-  email: string;
+  description: string;
   location: string;
   phone: string;
   skills: Skill[];

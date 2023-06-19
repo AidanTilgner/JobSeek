@@ -64,7 +64,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
         const { accessToken, refreshToken } = res.data.data;
         localStorage.setItem("accessToken", accessToken);
         localStorage.setItem("refreshToken", refreshToken);
-        loadUser();
+        window.location.reload();
       })
       .catch((err) => {
         console.error(err);

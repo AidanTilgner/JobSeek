@@ -1,11 +1,14 @@
 import axios from "axios";
 import { io, Socket } from "socket.io-client";
 
+const getAccessToken = () =>
+  localStorage.getItem("accessToken") || sessionStorage.getItem("accessToken");
+
 export const api = axios.create({
   baseURL: "/api",
   withCredentials: true,
   headers: {
-    Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+    Authorization: `Bearer ${getAccessToken()}`,
   },
 });
 
