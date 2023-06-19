@@ -5,6 +5,7 @@ import { checkTokenIsExpired, logout } from "../utils/auth";
 
 interface UserContextInterface {
   user: User | null;
+  isLoggedIn: boolean;
   setUser: (user: User | null) => void;
   reloadUser: () => void;
   refreshUser: () => void;
@@ -12,6 +13,7 @@ interface UserContextInterface {
 
 const UserContext = createContext<UserContextInterface>({
   user: null,
+  isLoggedIn: false,
   setUser: () => {
     return;
   },
@@ -76,7 +78,13 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     refreshUser();
   }, []);
 
-  const value = { user, setUser, reloadUser: loadUser, refreshUser };
+  const value: UserContextInterface = {
+    user,
+    isLoggedIn: !!user,
+    setUser,
+    reloadUser: loadUser,
+    refreshUser,
+  };
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };
