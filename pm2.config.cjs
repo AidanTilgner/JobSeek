@@ -3,7 +3,7 @@
 module.exports = {
   apps: [
     {
-      name: "[APP NAME]",
+      name: "JOBSEEK",
       script: "npm run start",
     },
   ],
