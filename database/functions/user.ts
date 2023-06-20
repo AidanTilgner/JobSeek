@@ -61,6 +61,7 @@ export async function loginUser(email: string, password: string) {
         email,
       },
       loadEagerRelations: false,
+      select: ["id", "email", "password"],
     });
 
     if (!user) {
