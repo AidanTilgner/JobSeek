@@ -1,4 +1,17 @@
 import { Resume } from "../database/models/resume";
+import { Skill } from "../database/models/skill";
+
+export const getSkillLevelDescribed = (skill: Skill) => {
+  const level = {
+    1: "Beginner",
+    2: "Intermediate",
+    3: "Advanced",
+    4: "Expert",
+    5: "Master",
+  };
+
+  return level[skill.level];
+};
 
 export const getResumeDescribed = (resume: Resume) => {
   const described = `
@@ -8,7 +21,12 @@ export const getResumeDescribed = (resume: Resume) => {
     Applicant Phone: ${resume.phone}
 
     Applicant Skills: ${resume.skills
-      .map((skill) => `${skill.name} - ${skill.description}`)
+      .map(
+        (skill) =>
+          `${skill.name} - ${skill.description} - ${getSkillLevelDescribed(
+            skill
+          )}`
+      )
       .join(",\n ")}
 
     Applicant Experience: ${resume.experience
