@@ -20,6 +20,9 @@ export const socket: Socket = io();
       socket: Socket;
     }
   ).socket = socket;
+  socket.on("connect", () => {
+    api.defaults.headers["x-socket-id"] = socket.id;
+  });
 })();
 
 export const recieveEvents = (

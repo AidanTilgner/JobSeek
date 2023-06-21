@@ -65,12 +65,11 @@ export const suggestFixStream = async (
 
         const decodedValue = new TextDecoder("utf-8").decode(value);
 
-        count++;
         socket.emit(eventName, {
           success: true,
           message_fragment: decodedValue,
           done: false,
-          index: count,
+          index: count++,
         });
 
         // Read next chunk

@@ -59,6 +59,7 @@ function Login() {
 
                 localStorage.setItem("accessToken", accessToken);
                 localStorage.setItem("refreshToken", refreshToken);
+                api.defaults.headers["Authorization"] = `Bearer ${accessToken}`;
 
                 showNotification({
                   title: "Success",

@@ -1,39 +1,33 @@
 import type { Server, Socket } from "socket.io";
-import { createCoverLetterStream } from "../routers/application/handlers";
 
 const connection: {
-  socket: Socket | null;
+  sockets: { [key: string]: Socket };
   io: Server | null;
 } = {
-  socket: null,
+  sockets: {},
   io: null,
 };
 
 export const initSocketIO = (io: Server) => {
   io.on("connection", (sock) => {
-    console.info("a user connected");
+    const now = new Date().toTimeString();
+    console.info(`A user connected at ${now}`, sock.id);
 
-    connection.socket = sock;
+    connection.sockets[sock.id] = sock;
     connection.io = io;
 
-    connection.socket.on("application/new/cover-letter:request", (payload) => {
-      createCoverLetterStream(
-        connection.socket as Socket,
-        payload,
-        "application/new/cover-letter:datastream"
-      );
-    });
-
-    connection.socket.on("disconnect", () => {
-      console.info("user disconnected");
+    sock.on("disconnect", () => {
+      const now = new Date().toTimeString();
+      console.info(`A user disconnected at ${now}`, sock.id);
+      delete connection.sockets[sock.id];
     });
   });
 
   return io;
 };
 
-export const getSocket = () => {
-  return connection.socket;
+export const getSocket = (id: string) => {
+  return connection.sockets[id];
 };
 
 export const getIO = () => {

@@ -8,7 +8,9 @@ router.post("/chat/suggest-fix", async (req, res) => {
   try {
     const stream = req.query.stream || req.body.stream;
 
-    const socket = getSocket();
+    const socketID = req.headers["x-socket-id"] as string;
+
+    const socket = getSocket(socketID);
 
     if (stream && socket) {
       suggestFixStream(socket, req.body, "llms/chat/suggest-fix:datastream");

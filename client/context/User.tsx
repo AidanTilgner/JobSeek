@@ -66,7 +66,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
         const { accessToken, refreshToken } = res.data.data;
         localStorage.setItem("accessToken", accessToken);
         localStorage.setItem("refreshToken", refreshToken);
-        window.location.reload();
+        api.defaults.headers["Authorization"] = `Bearer ${accessToken}`;
       })
       .catch((err) => {
         console.error(err);

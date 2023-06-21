@@ -10,7 +10,9 @@ router.use("/resume", resumeRouter);
 
 router.post("/new/cover-letter", checkAccess, (req, res) => {
   try {
-    const socket = getSocket();
+    const socketID = req.headers["x-socket-id"] as string;
+    if (!socketID) throw new Error("Socket ID not found.");
+    const socket = getSocket(socketID);
 
     const userId = req["jwtPayload"].id;
 
