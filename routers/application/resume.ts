@@ -255,15 +255,8 @@ router.post("/project", checkAccess, async (req, res) => {
 
 router.put("/project/:project_id", checkAccess, async (req, res) => {
   try {
-    const {
-      name,
-      description,
-      startDate,
-      endDate,
-      skills,
-      link,
-      location_worked_on,
-    } = req.body;
+    const { name, description, startDate, endDate, link, location_worked_on } =
+      req.body;
     const { project_id } = req.params;
 
     if (
@@ -271,7 +264,6 @@ router.put("/project/:project_id", checkAccess, async (req, res) => {
       !name ||
       !description ||
       !startDate ||
-      !skills ||
       !location_worked_on
     ) {
       return res.status(400).json({
