@@ -46,7 +46,11 @@ export const getResumeDescribed = (resume: Resume) => {
     Applicant Projects: ${resume.projects
       .map(
         (project) =>
-          `${project.name} from ${project.startDate} to ${project.endDate} - ${project.description}`
+          `${project.name} ${project.link && `(${project.link})`} from ${
+            project.startDate
+          } to ${project.endDate} at ${project.location_worked_on} - ${
+            project.description
+          }`
       )
       .join(",\n ")}
     `;
