@@ -2,22 +2,36 @@ import React, { FormEventHandler, useEffect, useState } from "react";
 import { useForm } from "@mantine/form";
 import {
   Button,
+  Flex,
   Grid,
   Group,
+  SegmentedControl,
   Text,
   TextInput,
   Textarea,
   Title,
 } from "@mantine/core";
-import { JobDescription } from "../../declarations/main";
+import {
+  CoverLetterModes,
+  JobDescription,
+  Resume,
+} from "../../declarations/main";
 import styles from "./NewApplication.module.scss";
 import { api, socket } from "../../utils/server";
 import Automatic from "../TextEditor/Automatic/Automatic";
 import { useUser } from "../../context/User";
 import { showNotification } from "@mantine/notifications";
+import { getResumeDescribed } from "../../utils/resume";
 
 function NewApplication() {
   const [loading, setLoading] = useState<boolean>(false);
+  const [resume, setResume] = useState<Resume>();
+
+  useEffect(() => {
+    api.get("/applications/resume").then((response) => {
+      setResume(response.data.data);
+    });
+  }, []);
 
   const form = useForm<{
     jobDescription: JobDescription;
@@ -95,6 +109,8 @@ function NewApplication() {
     }
   }, []);
 
+  const [mode, setMode] = useState<CoverLetterModes>("cover-letter");
+
   const onSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
     form.validate();
@@ -113,6 +129,7 @@ function NewApplication() {
     api.post("/applications/new/cover-letter", {
       jobDescription: form.values.jobDescription,
       stream: true,
+      mode,
     });
   };
 
@@ -159,6 +176,22 @@ function NewApplication() {
         >
           <form onSubmit={onSubmit}>
             <Grid>
+              <Grid.Col sm={12} md={12}>
+                <Flex justify="left" direction="column">
+                  <Text size="sm">Mode</Text>
+                  <SegmentedControl
+                    data={[
+                      { value: "cover-letter", label: "Cover Letter" },
+                      {
+                        value: "conversation-starter",
+                        label: "Conversation Starter",
+                      },
+                    ]}
+                    value={mode}
+                    onChange={(value) => setMode(value as CoverLetterModes)}
+                  />
+                </Flex>
+              </Grid.Col>
               <Grid.Col sm={12} md={6}>
                 <TextInput
                   label="Job Title"
@@ -245,6 +278,8 @@ function NewApplication() {
                   setCoverLetter("");
                 }}
                 disabled={disabled}
+                mode={mode}
+                context={resume ? getResumeDescribed(resume) : ""}
               />
             </div>
           </div>

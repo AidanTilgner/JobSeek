@@ -47,3 +47,6 @@ export interface JobDescription {
   location: string;
   recruiter_name: string | undefined;
 }
+
+export type SuggestionFixModes = "cover-letter" | "conversation-starter";
+export type CoverLetterModes = "cover-letter" | "conversation-starter";

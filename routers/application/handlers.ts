@@ -19,9 +19,13 @@ export const createCoverLetter = async (req: Request, res: Response) => {
       });
     }
 
-    const { jobDescription } = req.body;
+    const { jobDescription, mode } = req.body;
 
-    const response = await getGeneratedCoverLetter(jobDescription, userId);
+    const response = await getGeneratedCoverLetter(
+      jobDescription,
+      userId,
+      mode
+    );
 
     res.status(200).json({
       success: response.success,
@@ -43,13 +47,15 @@ export const createCoverLetterStream = async (
   userId: number
 ) => {
   try {
-    const { jobDescription } = payload as {
+    const { jobDescription, mode } = payload as {
       jobDescription: JobDescription;
+      mode: any;
     };
 
     const response = await getGeneratedCoverLetterStream(
       jobDescription,
-      userId
+      userId,
+      mode
     );
 
     if (!response.success || !response.stream) {

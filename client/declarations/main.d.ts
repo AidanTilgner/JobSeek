@@ -42,6 +42,7 @@ export interface Resume {
   phone: string;
   email: string;
   website: string;
+  user?: User;
   skills: Skill[];
   experience: Experience[];
   education: Education[];
@@ -65,3 +66,6 @@ export interface User {
   createdAt: Date;
   updatedAt: Date;
 }
+
+export type SuggestionFixModes = "cover-letter" | "conversation-starter";
+export type CoverLetterModes = "cover-letter" | "conversation-starter";

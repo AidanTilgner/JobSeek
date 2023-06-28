@@ -5,14 +5,17 @@ import { api, socket } from "../../../utils/server";
 import { showNotification } from "@mantine/notifications";
 import { Check, Copy } from "@phosphor-icons/react";
 import { copyTextToClipboard } from "../../../utils/methods";
+import { SuggestionFixModes } from "../../../declarations/main";
 
 interface AutomaticProps {
   content: string;
   onUpdate: (content: string, type: "replace" | "append") => void;
+  mode: SuggestionFixModes;
   onClearContent?: () => void;
   loading?: boolean;
   editable?: boolean;
   disabled?: boolean;
+  context?: string;
 }
 
 function Automatic({
@@ -22,6 +25,8 @@ function Automatic({
   loading: loadingProps,
   editable = true,
   disabled = false,
+  mode = "cover-letter",
+  context,
 }: AutomaticProps) {
   const [suggestion, setSuggestion] = useState<string>("");
 
@@ -73,6 +78,8 @@ function Automatic({
       original: content,
       suggestion: suggestion,
       stream: true,
+      mode,
+      context,
     });
     setSuggestion("");
   };

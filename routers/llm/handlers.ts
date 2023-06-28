@@ -9,10 +9,15 @@ export const suggestFix = async (req: Request, res: Response) => {
   try {
     const original = req.query.original || req.body.original;
     const suggestion = req.query.suggestion || req.body.suggestion;
+    const mode = req.query.mode || req.body.mode;
+    const context = req.query.context || req.body.context;
 
     const response = await getChatFixBySuggestion(
       original as string,
-      suggestion as string
+      suggestion as string,
+      "gpt-4",
+      mode,
+      context
     );
 
     res.status(200).json({
@@ -36,8 +41,16 @@ export const suggestFixStream = async (
   try {
     const original = payload.original;
     const suggestion = payload.suggestion;
+    const mode = payload.mode;
+    const context = payload.context;
 
-    const response = await getChatFixBySuggestionStream(original, suggestion);
+    const response = await getChatFixBySuggestionStream(
+      original,
+      suggestion,
+      "gpt-4",
+      mode,
+      context
+    );
 
     if (!response.success || !response.stream) {
       return socket.emit(eventName, {
