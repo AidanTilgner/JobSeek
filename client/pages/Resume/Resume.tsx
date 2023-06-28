@@ -40,6 +40,8 @@ function Resume() {
       description: "",
       phone: "",
       location: "",
+      email: "",
+      website: "",
     },
     validate: {
       name: (value) => {
@@ -67,6 +69,18 @@ function Resume() {
         const isValid = value && value.trim().length > 0;
         if (!isValid) {
           return "Value must not be empty";
+        }
+        return null;
+      },
+      email: (value) => {
+        const isValid = value && value.trim().length > 0;
+        if (!isValid) {
+          return "Value must not be empty";
+        }
+        const emailRegex = /\S+@\S+\.\S+/;
+        const isEmail = emailRegex.test(value);
+        if (!isEmail) {
+          return "Value must be a valid email";
         }
         return null;
       },
@@ -315,6 +329,8 @@ function Resume() {
           description: res.data.data.description || "",
           phone: res.data.data.phone || "",
           location: res.data.data.location || "",
+          email: res.data.data.email || "",
+          website: res.data.data.website || "",
         });
         setSkills(res.data.data.skills);
         setExperience(res.data.data.experience);
@@ -348,6 +364,8 @@ function Resume() {
         description: form.values.description,
         phone: form.values.phone,
         location: form.values.location,
+        email: form.values.email,
+        website: form.values.website,
       })
       .finally(() => {
         setLoading(false);
@@ -820,6 +838,7 @@ function Resume() {
           <TextInput
             label="Name"
             placeholder="Your name..."
+            description="How you'd like to be addressed."
             required
             {...form.getInputProps("name")}
             disabled={disabled}
@@ -829,6 +848,7 @@ function Resume() {
           <TextInput
             label="Phone"
             placeholder="Your phone number..."
+            description="A phone number where you can be reached."
             required
             {...form.getInputProps("phone")}
             disabled={disabled}
@@ -838,18 +858,44 @@ function Resume() {
           <TextInput
             label="Location"
             placeholder="Your location..."
+            description="Where you're currently located."
             required
             {...form.getInputProps("location")}
             disabled={disabled}
           />
         </Grid.Col>
         <Grid.Col sm={12} md={6} lg={4}>
+          <TextInput
+            label="Email"
+            placeholder="Your email..."
+            description="An email address where you can be reached."
+            required
+            {...form.getInputProps("email")}
+            disabled={disabled}
+          />
+        </Grid.Col>
+        <Grid.Col sm={12} md={6} lg={4}>
+          <TextInput
+            label="Website"
+            placeholder="Your website..."
+            description="A personal portfolio, blog, or other website."
+            {...form.getInputProps("website")}
+            disabled={disabled}
+          />
+        </Grid.Col>
+        <Grid.Col sm={12} md={6}>
           <Textarea
             label="Description"
             placeholder="Describe yourself..."
+            description="A short description of yourself and your experience."
             required
             {...form.getInputProps("description")}
             disabled={disabled}
+            styles={{
+              input: {
+                resize: "vertical",
+              },
+            }}
           />
         </Grid.Col>
         <Grid.Col span={12} />

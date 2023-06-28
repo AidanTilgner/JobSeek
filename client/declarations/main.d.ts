@@ -40,6 +40,8 @@ export interface Resume {
   description: string;
   location: string;
   phone: string;
+  email: string;
+  website: string;
   skills: Skill[];
   experience: Experience[];
   education: Education[];

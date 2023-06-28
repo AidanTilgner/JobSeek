@@ -23,6 +23,7 @@ export const newResume = async (userId: number) => {
     resume.name = `${user.firstName} ${user.lastName}`;
     resume.description =
       "I am a distinguished professional with a passion in many areas.";
+    resume.email = user.email;
 
     await dataSource.manager.save(resume);
 
@@ -91,11 +92,15 @@ export const updateResume = async (
     description,
     location,
     phone,
+    email,
+    website,
   }: {
     name: Resume["name"];
     description: Resume["description"];
     location: Resume["location"];
     phone: Resume["phone"];
+    email: Resume["email"];
+    website: Resume["website"];
   }
 ) => {
   try {
@@ -117,6 +122,8 @@ export const updateResume = async (
     user.resume.description = description;
     user.resume.phone = phone;
     user.resume.location = location;
+    user.resume.email = email;
+    user.resume.website = website;
 
     await dataSource.manager.save(user.resume);
 

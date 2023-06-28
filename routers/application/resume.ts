@@ -22,9 +22,9 @@ const router = Router();
 
 router.put("/", checkAccess, async (req, res) => {
   try {
-    const { name, description, phone, location } = req.body;
+    const { name, description, phone, location, website, email } = req.body;
 
-    if (!name || !description || !phone || !location) {
+    if (!name || !description || !phone || !location || !email) {
       return res.status(400).json({
         success: false,
         message: "Missing required fields.",
@@ -42,6 +42,8 @@ router.put("/", checkAccess, async (req, res) => {
       description,
       phone,
       location,
+      email,
+      website,
     });
 
     return res.status(200).json({

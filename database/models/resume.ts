@@ -30,6 +30,12 @@ export class Resume {
   @Column({ type: "varchar", nullable: true })
   phone!: string;
 
+  @Column({ type: "varchar", nullable: true })
+  website!: string;
+
+  @Column({ type: "varchar", nullable: true })
+  email!: string;
+
   @OneToOne(() => User, (user) => user.resume)
   user!: User;
 
