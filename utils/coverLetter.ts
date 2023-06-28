@@ -96,7 +96,7 @@ export const getGeneratedCoverLetter = async (
         message: "Something went wrong.",
       };
     }
-    const response = await getChatCompletion(messages, "gpt-3.5-turbo");
+    const response = await getChatCompletion(messages, "gpt-4");
     return response;
   } catch (error) {
     console.error(error);
@@ -131,7 +131,7 @@ export const getGeneratedCoverLetterStream = async (
         stream: null,
       };
     }
-    const response = await getChatCompletionStream(messages, "gpt-3.5-turbo");
+    const response = await getChatCompletionStream(messages, "gpt-4");
     return response;
   } catch (error) {
     console.error(error);

@@ -70,9 +70,28 @@ function NewApplication() {
   }, [coverLetter]);
 
   useEffect(() => {
+    const notEmpty = form.isDirty("jobDescription");
+    if (notEmpty) {
+      localStorage.setItem(
+        "jobDescription",
+        JSON.stringify(form.values.jobDescription)
+      );
+    }
+  }, [form.values.jobDescription]);
+
+  useEffect(() => {
     const coverLetter = localStorage.getItem("coverLetter");
     if (coverLetter) {
       setCoverLetter(coverLetter);
+    }
+  }, []);
+
+  useEffect(() => {
+    const jobDescription = localStorage.getItem("jobDescription");
+    if (jobDescription) {
+      form.setValues({
+        jobDescription: JSON.parse(jobDescription),
+      });
     }
   }, []);
 

@@ -31,7 +31,7 @@ export const getFixBySuggestionUserPrompt = (
 export const getChatFixBySuggestion = async (
   original: string,
   suggestion: string,
-  model: CreateChatCompletionRequest["model"] = "gpt-3.5-turbo"
+  model: CreateChatCompletionRequest["model"] = "gpt-4"
 ) => {
   try {
     const systemPrompt = getFixBySuggestionSystemPrompt();
@@ -64,7 +64,7 @@ export const getChatFixBySuggestion = async (
 export const getChatFixBySuggestionStream = async (
   original: string,
   suggestion: string,
-  model: CreateChatCompletionRequest["model"] = "gpt-3.5-turbo"
+  model: CreateChatCompletionRequest["model"] = "gpt-4"
 ) => {
   try {
     const systemPrompt = getFixBySuggestionSystemPrompt();
