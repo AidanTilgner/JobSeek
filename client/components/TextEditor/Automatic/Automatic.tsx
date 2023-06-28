@@ -39,6 +39,12 @@ function Automatic({
       .replace(/\t/g, "&nbsp;&nbsp;&nbsp;&nbsp;");
   };
 
+  const getCopyableContent = (content: string) => {
+    return content
+      .replace(/<br \/>/g, "\n")
+      .replace(/&nbsp;&nbsp;&nbsp;&nbsp;/g, "\t");
+  };
+
   useEffect(() => {
     socket.on("llms/chat/suggest-fix:datastream", (data) => {
       if (data.done) {
@@ -107,7 +113,7 @@ function Automatic({
           <div className={styles.options}>
             <ActionIcon
               onClick={() => {
-                copyTextToClipboard(content);
+                copyTextToClipboard(getCopyableContent(content));
                 showNotification({
                   title: "Copied to clipboard",
                   message: "The content has been copied to your clipboard",
@@ -128,9 +134,11 @@ function Automatic({
       <div className={styles.controls}>
         <Group spacing={24} position="right">
           <Textarea
+            label="Suggest a Change"
+            description="Type your suggestion, then submit (enter or the button), and it will be rewritten"
             value={suggestion}
             onChange={(event) => setSuggestion(event.currentTarget.value)}
-            placeholder="Suggestion"
+            placeholder="Your suggestion here..."
             className={styles.textarea}
             style={{
               width: "100%",

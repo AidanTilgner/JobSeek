@@ -201,6 +201,11 @@ function NewApplication() {
                   withAsterisk
                   {...form.getInputProps("jobDescription.description")}
                   disabled={disabled}
+                  styles={{
+                    input: {
+                      resize: "vertical",
+                    },
+                  }}
                 />
               </Grid.Col>
               <Grid.Col sm={12} md={12} />
