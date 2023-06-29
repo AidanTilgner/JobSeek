@@ -44,6 +44,7 @@ const getFixBySuggestionSystemPrompt = (mode?: SuggestionFixModes) => {
     - Only be the fixed copy, no extra words or meta information, just the text of the fixed copy
     - Implement the user's suggestions based on intent, not just the exact words
     - Always return at least the original copy as a fallback if you do not understand the user's suggestions
+    - Don't surround in quotes, or add any extra characters, just the text of the fixed copy
 
     ${
       getCheckedMode(mode)
